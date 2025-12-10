@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppToDo.View.WorkspaceView"
+             xmlns:vm="clr-namespace:MauiAppToDo.ViewModel"
+             Title="WorkspaceView">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Formulaire -->
+            <RowDefinition Height="*"/>
+            <!-- Liste des workspaces -->
+        </Grid.RowDefinitions>
+
+        <!-- Formulaire création workspace -->
+        <StackPanel Orientation="Vertical" Grid.Row="0" Margin="12,12,12,10">
+            <Border Background="#1764D3" Padding="12">
+                <TextBlock Text="Mes Espaces de travail"
+                             FontSize="22"
+                             Foreground="White"
+                             FontWeight="Bold"/>
+            </Border>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,10,0">
+
+                <Border CornerRadius="8" 
+                  Background="White" 
+                  BorderBrush="Gray" 
+                  BorderThickness="1"
+                  Padding="2">
+                    <TextBox Width="200"
+                       Padding="2"
+                       Background="Transparent"
+                       BorderThickness="0"
+                       Text="{Binding NewWorkspaceName, UpdateSourceTrigger=PropertyChanged}"
+                       HorizontalContentAlignment="Center"
+                       VerticalContentAlignment="Center"/>
+                </Border>
+
+
+
+                <!-- Bouton Ajouter Workspace -->
+                <Button Content="+ Créer"
+                     Width="80" Height="35"
+                     Style="{StaticResource CreateButtonStyle}"
+                     Margin="10,0,0,0"
+                     Background="#1764D3"
+                     Command="{Binding AddCommand}"
+                  />
+
+                <Button Content="Modifier" Width="80" Height="35"
+                       Style="{StaticResource CreateButtonStyle}"
+                       Margin="10,0,0,0"
+                       Background="#81C784"
+                       Command="{Binding EditCommand}"
+                    />
+
+                <Button Content="Supprimer" Width="80" Height="35"
+                       Style="{StaticResource CreateButtonStyle}"
+                       Margin="10,0,0,0"
+                       Background="#E57373"
+                       Command="{Binding DeleteCommand}"
+                  />
+
+
+            </StackPanel>
+
+            <TextBlock Name="errorMessage" Text="{Binding ErrorMessage}" Foreground="Red" Margin="10,0,0,0" HorizontalAlignment="Center"/>
+
+        </StackPanel>
+
+
+        <!-- Scrollable container pour la liste des workspaces -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="10"  Grid.Row="1">
+
+            <!-- Liste des workspaces avec sélection -->
+            <ListBox ItemsSource="{Binding Workspaces}" 
+               SelectedItem="{Binding SelectedWorkspace, Mode=TwoWay}"
+               Grid.Row="1"
+               Margin="10"
+               Background="Transparent"
+               BorderThickness="0"
+               ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="10" HorizontalAlignment="Left" Width="150">
+                            <!-- Logo du workspace -->
+                            <Border Style="{StaticResource WorkspaceItemStyle}" HorizontalAlignment="Center">
+                                <Image Source="pack://application:,,,/Images/folder2.jpg" Stretch="Uniform"/>
+                            </Border>
+
+                            <!-- Nom du workspace -->
+                            <TextBlock Text="{Binding Name}" 
+                             Margin="0,10,0,5"
+                             FontWeight="SemiBold" 
+                             FontSize="14" 
+                             TextAlignment="Center"
+                             TextWrapping="Wrap"/>
+
+                            <!-- Bouton Ouvrir -->
+                            <Button Content="Ouvrir"
+                              Command="{Binding DataContext.OpenCommand, 
+                                                RelativeSource={RelativeSource AncestorType=ListBox}}"
+                              CommandParameter="{Binding}"
+                              Width="80" Height="35"
+                              Style="{StaticResource CreateButtonStyle}"
+                              Margin="10,0,0,0"
+                              Background="#1764D3"
+                              HorizontalAlignment="Center"
+                              Cursor="Hand"
+                          />
+
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
+
+        </ScrollViewer>
+
+    </Grid>
+</ContentPage>

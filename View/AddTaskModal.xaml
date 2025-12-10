@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppToDo.View.AddTaskModal"
+             xmlns:vm="clr-namespace:MauiAppToDo.ViewModel"
+             Title="AddTaskModal">
+    <Border Background="White" Padding="20" BorderBrush="Gray" BorderThickness="1" >
+        <StackPanel>
+            <TextBlock Text="Nouvelle tâche" 
+                       FontSize="18" 
+                       FontWeight="Bold" 
+                       Margin="0,0,0,15" 
+                       HorizontalAlignment="Center"/>
+
+            <!-- Titre -->
+            <TextBlock Text="Nom de la tâche *" FontWeight="SemiBold" Margin="0,0,0,5"/>
+            <TextBox Text="{Binding TaskTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     BorderBrush="{Binding TaskTitleBorderBrush}"
+                     BorderThickness="1"
+                     Padding="5"
+                     Margin="0,0,0,5"/>
+            <TextBlock Text="{Binding TaskErrorMessage}"
+                       Foreground="Red"
+                       FontSize="12"
+                       Margin="0,0,0,10"/>
+
+            <!-- Description -->
+            <TextBlock Text="Description" FontWeight="SemiBold" Margin="0,0,0,5"/>
+            <TextBox Text="{Binding TaskDescription, Mode=TwoWay}" 
+                     Height="60"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     Padding="5"
+                     Margin="0,0,0,10"/>
+
+            <!-- Statut et Priorité -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <StackPanel Width="180">
+                    <TextBlock Text="Statut" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <ComboBox SelectedItem="{Binding TaskStatus}"
+                              ItemsSource="{Binding Statuses}"
+                              Padding="5"/>
+                </StackPanel>
+                <StackPanel Width="180" Margin="10,0,0,0">
+                    <TextBlock Text="Priorité" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <ComboBox SelectedItem="{Binding TaskPriority}"
+                              ItemsSource="{Binding Priorities}"
+                              Padding="5"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Date limite -->
+            <TextBlock Text="Date limite" FontWeight="SemiBold" Margin="0,0,0,5"/>
+            <DatePicker SelectedDate="{Binding TaskDeadline}" Margin="0,0,0,15"/>
+
+            <!-- Boutons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Annuler" Width="90"  Padding="4" Margin="0,0,10,0" Click="Cancel_Click"/>
+                <Button Content="Ajouter" Width="90" Padding="4" Background="#1764D3" Foreground="White" Click="Add_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</ContentPage>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppToDo.View.HomeView"
+             xmlns:vm="clr-namespace:MauiAppToDo.ViewModel"
+             Title="HomeView">
+
+    <Grid>
+        <!-- Colonnes : Sidebar + Contenu principal -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Lignes : Navbar + Contenu -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Grid.RowSpan="2"
+                Background="#E9EEF6"
+                Padding="12">
+            <StackPanel VerticalAlignment="Stretch" >
+                <!-- Logo de l'application -->
+                <Image Source="pack://application:,,,/Images/OIP2.jpg"
+                   Width="120"
+                   Height="60"
+                   Margin="0,0,0,20"
+                   Stretch="Uniform"/>
+
+                <!-- ToggleButtons Sidebar -->
+                <ToggleButton Style="{StaticResource SidebarButtonStyle}"
+                              Content="Espace de travail"
+                              IsChecked="{Binding IsWorkspaceActive, Mode=TwoWay}"
+                              Command="{Binding ShowWorkspaceCommand}"/>
+
+                <ToggleButton Style="{StaticResource SidebarButtonStyle}"
+                              Content="Statistiques"
+                              IsChecked="{Binding IsStatisticActive, Mode=TwoWay}"
+                              Command="{Binding ShowStatisticCommand}"/>
+
+                <ToggleButton Style="{StaticResource SidebarButtonStyle}"
+                              Content="Profil"
+                              IsChecked="{Binding IsProfileActive, Mode=TwoWay}"
+                              Command="{Binding ShowProfileCommand}"/>
+
+                <ToggleButton Style="{StaticResource SidebarButtonStyle}"
+                              Content="Déconnexion"
+                              IsChecked="{Binding IsLogoutActive, Mode=TwoWay}"
+                              Command="{Binding LogoutCommand}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Navbar -->
+        <Grid Grid.Column="1" Grid.Row="0" Background="#E9EEF6" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- SearchBar -->
+            <Border Grid.Column="0" Margin="10" Background="White" CornerRadius="15" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                    Padding="5">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="1" Opacity="0.2"/>
+                </Border.Effect>
+                <TextBox BorderThickness="0" Background="Transparent" VerticalAlignment="Center" 
+                         FontSize="14" Foreground="#333" 
+                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+            </Border>
+
+            <!-- Bouton Ajouter + Icône Utilisateur -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" >
+                <!-- Icône utilisateur -->
+                <Border Width="35" Height="35" Background="#FFFF" CornerRadius="17">
+                    <TextBlock Text="U" Foreground="Black" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Contenu principal -->
+        <ContentControl Grid.Column="1" Grid.Row="1" Content="{Binding CurrentViewModel}"/>
+    </Grid>
+</ContentPage>
